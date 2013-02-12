@@ -3,6 +3,6 @@
 require 'makefolio'
 require 'pathname'
 
-gen = Makefolio::Generator.new
-gen.make_projects()
-puts 'Projects generated'
+site = Makefolio::Site.new
+site.generate
+puts 'Site generated'

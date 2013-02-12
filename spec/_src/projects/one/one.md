@@ -1,6 +1,10 @@
-"Where did you get the mark upon your forehead?" continued the voice.
+"Where did you get the mark upon your forehead?" continued the [voice](http://www.google.com).
 
-"That is where the Good Witch of the North kissed me when she bade me good-bye and sent me to you," said the girl.
+- "That
+- is
+- where
+
+The Good Witch of the North kissed me when she bade me good-bye and sent me to you," said the girl.
 
 Again the eyes looked at her sharply, and they saw she was telling the truth. Then Oz asked, "What do you wish me to do?"
 
