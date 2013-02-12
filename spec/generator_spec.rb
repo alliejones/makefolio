@@ -1,11 +1,14 @@
 require_relative '../lib/makefolio'
 
-describe Makefolio::Generator do
+describe Makefolio::Site do
   before(:each) do
-    @gen = Makefolio::Generator.new('./spec/_src/')
+    @gen = Makefolio::Site.new('./spec/_src/')
   end
 
-  it "should list the project directories" do
-    @gen.get_projects.should match_array([ 'one', 'two', 'three'])
+  describe "when created" do
+    it "should have a collection of projects" do
+      names = @gen.projects.collect { |p| p.name }
+      names.should match_array([ 'one', 'two', 'three'])
+    end
   end
 end
