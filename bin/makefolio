@@ -1,0 +1,8 @@
+#!usr/bin/env ruby
+
+require 'makefolio'
+require 'pathname'
+
+gen = Makefolio::Generator.new
+gen.make_projects()
+puts 'Projects generated'
