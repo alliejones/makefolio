@@ -3,6 +3,6 @@
 require 'makefolio'
 require 'pathname'
 
-site = Makefolio::Site.new
+site = Makefolio::Site.new(Dir.pwd + '/_src')
 site.generate
 puts 'Site generated'

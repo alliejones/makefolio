@@ -1,5 +1,7 @@
-require "makefolio/version"
-require "erb"
+require 'makefolio/version'
+require 'erb'
+require 'RDiscount'
+require 'ostruct'
 
 module Makefolio
   class Site

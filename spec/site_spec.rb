@@ -2,6 +2,7 @@ require_relative '../lib/makefolio'
 require 'fileutils'
 require 'RDiscount'
 require 'erb'
+require 'ostruct'
 
 describe Makefolio::Site do
   before(:each) do
