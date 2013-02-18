@@ -1,7 +1,9 @@
 # -*- encoding: utf-8 -*-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
 require 'makefolio/version'
+require 'makefolio'
 
 Gem::Specification.new do |gem|
   gem.name          = "makefolio"
@@ -27,4 +29,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "fakefs"
 
   gem.add_runtime_dependency "rdiscount"
+  gem.add_runtime_dependency "safe_yaml"
 end

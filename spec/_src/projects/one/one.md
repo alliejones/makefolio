@@ -1,3 +1,7 @@
+---
+title: Project One
+template: project
+---
 Test paragraph
 
 "Where did you get the mark upon your forehead?" continued the [voice](http://www.google.com).

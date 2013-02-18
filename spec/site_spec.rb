@@ -38,7 +38,7 @@ describe Makefolio::Site do
 
       it "should contain each project's info" do
         index = IO.read('./spec/dist/index.html')
-        index.should have_tag('body') do
+        index.should have_tag 'body' do
           with_tag 'h2', :text => 'one'
           with_tag 'h2', :text => 'two'
           with_tag 'h2', :text => 'three'
