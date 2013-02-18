@@ -4,9 +4,8 @@ module Makefolio
 
     # content and layout should be a template in the form of a string
     # data should be a hash
-    def initialize(content_template, data, layout=nil)
+    def initialize(content_template, data, layout)
       @content_template = erb_template(content_template)
-      layout ||= '<%= content %>'
       @layout = erb_template(layout)
       @data = data
     end

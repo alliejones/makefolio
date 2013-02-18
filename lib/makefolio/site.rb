@@ -9,8 +9,6 @@ module Makefolio
       @template_dir = 'templates'
       @dist_dir = 'dist'
 
-      @layout = IO.read template_path.join('layout.html.erb')
-
       create_projects
     end
 
@@ -34,6 +32,14 @@ module Makefolio
     end
 
     private
+    def get_layout(name = 'layout')
+      IO.read template_path.join("#{name}.html.erb")
+    end
+
+    def get_template(name)
+      IO.read template_path.join("_#{name}.html.erb")
+    end
+
     def create_projects
       @projects = []
 
@@ -46,14 +52,7 @@ module Makefolio
     end
 
     def generate_index
-      index_tpl = IO.read template_path.join('_index.html.erb')
-      layout = IO.read template_path.join('layout.html.erb')
-
-      page = Template.new(index_tpl, { projects: @projects }, layout)
-
-      file = File.open(dist_path.join("index.html"), 'w') do |file|
-        file.write page.to_html
-      end
+      save_html_file 'index', get_template('index'), { projects: @projects }, get_layout
     end
 
     def generate_project_pages
@@ -61,15 +60,16 @@ module Makefolio
     end
 
     def generate_project_page(project)
-      html = Template.new(project.template, { name: project.name, desc: project.desc }, @layout).to_html
-      save_html_file project.name, html
+      data = { name: project.name, desc: project.desc }
+
+      save_html_file project.name, project.template, data, get_layout
     end
 
-    def save_html_file(name, contents)
-      filepath = dist_path.join "#{name}.html"
-      File.open(filepath, 'w') do |file|
-        file.write contents
-      end
+    def save_html_file(filename, template, data, layout)
+      page = Template.new(template, data, layout)
+
+      filepath = dist_path.join "#{filename}.html"
+      File.open(filepath, 'w') { |file| file.write page.to_html }
     end
   end
 end
