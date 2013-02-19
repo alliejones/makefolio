@@ -17,6 +17,13 @@ describe Makefolio::Project do
       project.desc.should have_tag 'p', :text => 'Test paragraph'
       project.desc.should have_tag 'li', :text => 'where'
     end
+
+    it "should return front matter data and description in tpl_data" do
+      project.tpl_data.keys.should include('title', 'template', 'desc')
+      project.tpl_data['title'].should == 'Project One'
+      project.tpl_data['template'].should == 'project'
+      project.tpl_data['desc'].should match(/^<p>Test paragraph/)
+    end
   end
 
   describe "without front matter" do
@@ -30,6 +37,12 @@ describe Makefolio::Project do
       project = Makefolio::Project.new('three', site)
       project.desc.should have_tag 'p', :text => 'Test paragraph'
       project.desc.should have_tag 'li', :text => 'A moment after all four'
+    end
+
+    it "should return description and default title in tpl_data" do
+      project.tpl_data.keys.should include('title', 'desc')
+      project.tpl_data['title'].should == 'three'
+      project.tpl_data['desc'].should match(/^<p>Test paragraph/)
     end
   end
 

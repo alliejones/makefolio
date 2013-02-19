@@ -52,7 +52,8 @@ module Makefolio
     end
 
     def generate_index
-      save_html_file 'index', get_template('index'), { projects: @projects }, get_layout
+      projects = @projects.collect { |p| p.tpl_data }
+      save_html_file 'index', get_template('index'), { 'projects' => projects }, get_layout
     end
 
     def generate_project_pages
@@ -60,9 +61,7 @@ module Makefolio
     end
 
     def generate_project_page(project)
-      data = { name: project.name, desc: project.desc }
-
-      save_html_file project.name, project.template, data, get_layout
+      save_html_file project.name, project.template, project.tpl_data, get_layout
     end
 
     def save_html_file(filename, template, data, layout)

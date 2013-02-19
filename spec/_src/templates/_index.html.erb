@@ -2,7 +2,7 @@
 
 <div class="project">
   <% projects.each do |project| %>
-    <h2><%= project.name %></h2>
-    <%= project.desc %>
+    <h2><%= project['title'] %></h2>
+    <%= project['desc'] %>
   <% end %>
 </div>

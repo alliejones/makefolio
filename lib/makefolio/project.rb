@@ -12,6 +12,15 @@ module Makefolio
       @template = read_template
     end
 
+    def tpl_data
+      @front_matter['desc'] = @desc
+      if !@front_matter.has_key? 'title' or @front_matter['title'].empty?
+        @front_matter['title'] = @name
+      end
+
+      @front_matter
+    end
+
     def content_path
       @path.join "#{@name}.md"
     end
