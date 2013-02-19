@@ -1,3 +1,5 @@
+require 'yaml'
+
 module Makefolio
   class Helpers
     # selects the text between '---' lines
