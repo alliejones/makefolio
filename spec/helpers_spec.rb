@@ -32,4 +32,9 @@ describe Makefolio::Helpers do
       content.should == "This is text\n\nWith no front matter"
     end
   end
+
+  it "should create correct large image filenames" do
+    large_filename = Makefolio::Helpers.large_image_filename('test.jpg')
+    large_filename.should == 'test-lg.jpg'
+  end
 end

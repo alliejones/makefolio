@@ -18,5 +18,9 @@ module Makefolio
     def self.strip_front_matter(content)
       content.gsub(@@front_matter_pattern, '').strip
     end
+
+    def self.large_image_filename(filename)
+      File.basename(filename, '.*') + '-lg' + File.extname(filename)
+    end
   end
 end

@@ -67,7 +67,11 @@ module Makefolio
 
     def read_image_paths
       image_glob = @path.join('img', '*.{jpg,png,gif}')
-      Pathname::glob(image_glob)
+
+      # ignore large versions of images
+      Pathname::glob(image_glob).reject! do |pathname|
+        pathname.basename.to_s.match(/.*-lg\..*/)
+      end
     end
 
     def read_image_filenames
@@ -83,7 +87,12 @@ module Makefolio
         images.each do |image|
           path = images_dist_path.join(image['filename']).relative_path_from(@site.dist_path)
           image['path'] = path.to_s
-          image.delete('filename')
+
+          filename_large = Helpers::large_image_filename(image['filename'])
+          image['filename_large'] = filename_large
+
+          path_large = images_dist_path.join(filename_large).relative_path_from(@site.dist_path)
+          image['path_large'] = path_large.to_s
         end
       else
         []

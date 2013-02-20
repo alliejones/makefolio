@@ -51,7 +51,7 @@ describe Makefolio::Project do
     end
 
     it "should have an images property containing its associated images" do
-      project.images.should == [{"path"=>"img/one/one-1.jpg", "alt"=>"Sleeping Abe"}, {"path"=>"img/one/one-2.jpg", "alt"=>"More sleeping Abe"}]
+      project.images.should == [{"filename"=>"one-1.jpg", "alt"=>"Sleeping Abe", "path"=>"img/one/one-1.jpg", "filename_large"=>"one-1-lg.jpg", "path_large"=>"img/one/one-1-lg.jpg"}, {"filename"=>"one-2.jpg", "alt"=>"More sleeping Abe", "path"=>"img/one/one-2.jpg", "filename_large"=>"one-2-lg.jpg", "path_large"=>"img/one/one-2-lg.jpg"}]
     end
 
     describe "with a missing content file" do
@@ -78,8 +78,8 @@ describe Makefolio::Project do
 
       data = YAML.load(IO.read('./spec/_src/projects/two/images.yml'))
 
-      data[0]['filename'].should == 'two-1.jpg'
-      data[0]['alt'].should == nil
+      # large versions of images (with -lg suffix) should be excluded
+      data.should == [{"filename"=>"two-1.jpg", "alt"=>nil}, {"filename"=>"two-2.jpg", "alt"=>nil}, {"filename"=>"two-3.jpg", "alt"=>nil}]
     end
 
     it "should not do anything if the file already exists" do

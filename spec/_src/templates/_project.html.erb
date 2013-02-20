@@ -1,7 +1,7 @@
 <h1>Project: <%= title %></h1>
 
 <% images.each do |image| %>
-  <img src="<%= image['path'] %>" alt="<%= image['alt'] %>">
+  <a href="<%= image['path_large'] %>"><img src="<%= image['path'] %>" alt="<%= image['alt'] %>"></a>
 <% end %>
 
 <%= desc %>
