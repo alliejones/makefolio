@@ -29,5 +29,4 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "fakefs"
 
   gem.add_runtime_dependency "rdiscount"
-  gem.add_runtime_dependency "safe_yaml"
 end

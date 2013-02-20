@@ -89,7 +89,9 @@ describe Makefolio::Project do
 
     after(:all) do
       images_two = Pathname.new('./spec/_src/projects/two/images.yml')
-      # FileUtils.rm(images_two)
+      if images_two.exist?
+        FileUtils.rm(images_two)
+      end
     end
   end
 
@@ -107,7 +109,7 @@ describe Makefolio::Project do
     end
 
     after(:all) do
-      # FileUtils.rm_rf './spec/dist/'
+      FileUtils.rm_rf './spec/dist/'
     end
   end
 end

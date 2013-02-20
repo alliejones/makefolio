@@ -3,12 +3,23 @@
 require 'makefolio'
 require 'pathname'
 
-src_path = Pathname.new(Dir.pwd).join '/_src'
+cmd = ARGV.shift # get the subcommand
+
+src_path = Pathname.new(Dir.pwd).join '_src'
 
 if src_path.exist?
-  site = Makefolio::Site.new(src_path.to_s)
-  site.generate
-  puts 'Site generated'
+
+  case cmd
+    when 'gen'
+      Makefolio::Site.new(src_path.to_s).generate
+      puts 'Site generated.'
+    when 'init'
+      Makefolio::Site.new(src_path.to_s).create_image_metadata
+      puts 'Image metadata files created.'
+    else
+      puts 'Some help will go here'
+  end
+
 else
   puts 'No source folder found!'
 end
