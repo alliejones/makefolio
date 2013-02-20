@@ -26,18 +26,20 @@ describe Makefolio::Site do
   end
 
   describe "when generating" do
+    let(:dist_path) { Pathname.new('./spec/dist') }
+
     before do
-      FileUtils.rm_rf('./spec/dist/')
+      FileUtils.rm_rf(dist_path)
       site.generate
     end
 
     describe "the index file" do
       it "should exist" do
-        Pathname.new('./spec/dist/index.html').exist?.should be_true
+        dist_path.join('index.html').exist?.should be_true
       end
 
       it "should contain each project's info" do
-        index = IO.read('./spec/dist/index.html')
+        index = IO.read dist_path.join('index.html')
         index.should have_tag 'body' do
           with_tag 'h2', :text => 'Project One'
           with_tag 'h2', :text => 'two'
@@ -47,13 +49,12 @@ describe Makefolio::Site do
     end
 
     it "should create an html file for each project" do
-      dist = Pathname.new('./spec/dist')
-      files = dist.children.select { |c| c.file? }.collect { |c| c.relative_path_from(dist).to_s }
+      files = dist_path.children.select { |c| c.file? }.collect { |c| c.relative_path_from(dist_path).to_s }
       files.should include('one.html', 'two.html', 'three.html')
     end
 
     after(:all) do
-      FileUtils.rm_rf('./spec/dist/')
+      FileUtils.rm_rf(dist_path)
     end
   end
 end
