@@ -31,6 +31,10 @@ module Makefolio
       generate_project_pages
     end
 
+    def create_image_metadata
+      @projects.each { |project| project.create_image_metadata }
+    end
+
     private
     def get_layout(name = 'layout')
       IO.read template_path.join("#{name}.html.erb")

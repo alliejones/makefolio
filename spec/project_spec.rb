@@ -69,6 +69,30 @@ describe Makefolio::Project do
     end
   end
 
+   describe "when creating image metadata files" do
+    it "should create an initial yaml file for each project without one" do
+      project2 = Makefolio::Project.new('two', site)
+      project2.create_image_metadata
+
+      data = YAML.load(IO.read('./spec/_src/projects/two/images.yml'))
+
+      data[0]['path'].should == 'img/two-1.jpg'
+      data[0]['alt'].should == nil
+    end
+
+    it "should not do anything if the file already exists" do
+      project.create_image_metadata
+
+      data = YAML.load(IO.read('./spec/_src/projects/one/images.yml'))
+      data[0]['alt'].should == 'Sleeping Abe'
+    end
+
+    after(:all) do
+      images_two = Pathname.new('./spec/_src/projects/two/images.yml')
+      # FileUtils.rm(images_two)
+    end
+  end
+
   describe "when generated" do
     before do
       FileUtils.rm_rf './spec/dist/'

@@ -1,3 +1,5 @@
+require 'pry'
+
 module Makefolio
   class Project
     attr_accessor :name, :site, :desc, :path, :template, :front_matter
@@ -36,6 +38,33 @@ module Makefolio
 
       md_desc = Helpers.strip_front_matter(content)
       @desc = RDiscount.new(md_desc).to_html
+    end
+
+    def create_image_metadata
+      image_metadata_file = @path.join 'images.yml'
+
+      unless image_metadata_file.exist?
+        image_fields = { 'path' => nil, 'alt' => nil }
+        image_paths = read_image_paths
+
+        image_data = []
+
+        image_paths.each do |path|
+          data = image_fields.clone
+          data['path'] = path
+          image_data << data
+        end
+
+        File.open(image_metadata_file, 'w') { |file| file.write image_data.to_yaml }
+      end
+    end
+
+    def read_image_paths
+      image_glob = @path.join('img', '*.{jpg,png,gif}')
+      images = Pathname::glob(image_glob)
+      images.map! do |image_pathname|
+        image_pathname.relative_path_from(@path).to_s
+      end
     end
 
     def read_template
