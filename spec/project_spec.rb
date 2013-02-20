@@ -48,8 +48,11 @@ describe Makefolio::Project do
 
   describe "when created" do
     it "should have a correctly set path" do
-      project = Makefolio::Project.new('one', site)
       project.path.to_s.should == './spec/_src/projects/one'
+    end
+
+    it "should have an images property containing its associated images" do
+      project.images.should == [{"path"=>"img/one-1.jpg", "alt"=>"Sleeping Abe"}, {"path"=>"img/one-2.jpg", "alt"=>"More sleeping Abe"}]
     end
 
     describe "with a missing content file" do
@@ -95,17 +98,24 @@ describe Makefolio::Project do
     end
   end
 
-  describe "when generated" do
+  describe "generated html file" do
     before do
       FileUtils.rm_rf './spec/dist/'
       site.generate
     end
 
-    it "should have an html file containing the layout and description" do
-      project = IO.read './spec/dist/one.html'
+    let(:project) { project = IO.read './spec/dist/one.html' }
 
+    it "should use the layout" do
       project.should have_tag 'head'
+    end
+
+    it "should contain the project description" do
       project.should have_tag 'p', :text => 'Test paragraph'
+    end
+
+    it "should contain the project images" do
+      # project.should have_tag 'img', :count => 2
     end
 
     after(:all) do

@@ -2,7 +2,7 @@ require 'pry'
 
 module Makefolio
   class Project
-    attr_accessor :name, :site, :desc, :path, :template, :front_matter
+    attr_accessor :name, :site, :desc, :images, :path, :template, :front_matter
 
     def initialize(name, site)
       @name = name
@@ -10,7 +10,7 @@ module Makefolio
       @path = @site.project_path.join @name
 
       read_content
-
+      @images = read_image_metadata
       @template = read_template
     end
 
@@ -27,6 +27,10 @@ module Makefolio
       @path.join "#{@name}.md"
     end
 
+    def image_metadata_path
+      @path.join 'images.yml'
+    end
+
     def read_content
       if content_path.exist?
         content = IO.read(content_path)
@@ -41,9 +45,7 @@ module Makefolio
     end
 
     def create_image_metadata
-      image_metadata_file = @path.join 'images.yml'
-
-      unless image_metadata_file.exist?
+      unless image_metadata_path.exist?
         image_fields = { 'path' => nil, 'alt' => nil }
         image_paths = read_image_paths
 
@@ -55,7 +57,7 @@ module Makefolio
           image_data << data
         end
 
-        File.open(image_metadata_file, 'w') { |file| file.write image_data.to_yaml }
+        File.open(image_metadata_path, 'w') { |file| file.write image_data.to_yaml }
       end
     end
 
@@ -64,6 +66,14 @@ module Makefolio
       images = Pathname::glob(image_glob)
       images.map! do |image_pathname|
         image_pathname.relative_path_from(@path).to_s
+      end
+    end
+
+    def read_image_metadata
+      if image_metadata_path.exist?
+        YAML.load(IO.read image_metadata_path)
+      else
+        []
       end
     end
 
