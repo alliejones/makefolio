@@ -9,7 +9,7 @@ describe Makefolio::Project do
 
   describe "with front matter" do
     it "should have a front_matter property with a hash of the data" do
-      project.front_matter.should == { 'title' => 'Project One', 'template' => 'project' }
+      project.front_matter.should == { 'title' => 'Project One' }
     end
 
     it "should have a desc property with the contents of <name>.md converted to HTML" do
@@ -19,9 +19,8 @@ describe Makefolio::Project do
     end
 
     it "should return front matter data and description in tpl_data" do
-      project.tpl_data.keys.should include('title', 'template', 'desc')
+      project.tpl_data.keys.should include('title', 'desc')
       project.tpl_data['title'].should == 'Project One'
-      project.tpl_data['template'].should == 'project'
       project.tpl_data['desc'].should match(/^<p>Test paragraph/)
     end
   end
@@ -52,7 +51,7 @@ describe Makefolio::Project do
     end
 
     it "should have an images property containing its associated images" do
-      project.images.should == [{"path"=>"img/one-1.jpg", "alt"=>"Sleeping Abe"}, {"path"=>"img/one-2.jpg", "alt"=>"More sleeping Abe"}]
+      project.images.should == [{"path"=>"img/one/one-1.jpg", "alt"=>"Sleeping Abe"}, {"path"=>"img/one/one-2.jpg", "alt"=>"More sleeping Abe"}]
     end
 
     describe "with a missing content file" do
@@ -79,7 +78,7 @@ describe Makefolio::Project do
 
       data = YAML.load(IO.read('./spec/_src/projects/two/images.yml'))
 
-      data[0]['path'].should == 'img/two-1.jpg'
+      data[0]['filename'].should == 'two-1.jpg'
       data[0]['alt'].should == nil
     end
 
@@ -115,7 +114,7 @@ describe Makefolio::Project do
     end
 
     it "should contain the project images" do
-      # project.should have_tag 'img', :count => 2
+      project.should have_tag 'img', :count => 2
     end
 
     after(:all) do

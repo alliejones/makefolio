@@ -1,6 +1,5 @@
 ---
 title: Project One
-template: project
 ---
 Test paragraph
 

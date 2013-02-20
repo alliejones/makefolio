@@ -1,5 +1,3 @@
-require 'pry'
-
 module Makefolio
   class Project
     attr_accessor :name, :site, :desc, :images, :path, :template, :front_matter
@@ -16,6 +14,8 @@ module Makefolio
 
     def tpl_data
       @front_matter['desc'] = @desc
+      @front_matter['images'] = @images
+
       if !@front_matter.has_key? 'title' or @front_matter['title'].empty?
         @front_matter['title'] = @name
       end
@@ -29,6 +29,10 @@ module Makefolio
 
     def image_metadata_path
       @path.join 'images.yml'
+    end
+
+    def images_dist_path
+      @site.dist_path.join('img', @name)
     end
 
     def read_content
@@ -46,14 +50,14 @@ module Makefolio
 
     def create_image_metadata
       unless image_metadata_path.exist?
-        image_fields = { 'path' => nil, 'alt' => nil }
-        image_paths = read_image_paths
+        image_fields = { 'filename' => nil, 'alt' => nil }
+        image_filenames = read_image_filenames
 
         image_data = []
 
-        image_paths.each do |path|
+        image_filenames.each do |filename|
           data = image_fields.clone
-          data['path'] = path
+          data['filename'] = filename
           image_data << data
         end
 
@@ -63,18 +67,36 @@ module Makefolio
 
     def read_image_paths
       image_glob = @path.join('img', '*.{jpg,png,gif}')
-      images = Pathname::glob(image_glob)
-      images.map! do |image_pathname|
-        image_pathname.relative_path_from(@path).to_s
+      Pathname::glob(image_glob)
+    end
+
+    def read_image_filenames
+      images = read_image_paths
+      images.map! do |image_path|
+        image_path.basename.to_s
       end
     end
 
     def read_image_metadata
       if image_metadata_path.exist?
-        YAML.load(IO.read image_metadata_path)
+        images = YAML.load(IO.read image_metadata_path)
+        images.each do |image|
+          path = images_dist_path.join(image['filename']).relative_path_from(@site.dist_path)
+          image['path'] = path.to_s
+          image.delete('filename')
+        end
       else
         []
       end
+    end
+
+    def generate_images
+      site_image_path = @site.dist_path.join 'img'
+      unless site_image_path.exist?
+        site_image_path.mkdir
+      end
+
+      FileUtils::copy_entry(@path.join('img'), images_dist_path)
     end
 
     def read_template

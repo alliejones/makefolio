@@ -53,6 +53,12 @@ describe Makefolio::Site do
       files.should include('one.html', 'two.html', 'three.html')
     end
 
+    it "should copy the images to their own folders in the dist directory" do
+      dist_path.join('img/one/one-1.jpg').exist?.should be_true
+      dist_path.join('img/two/two-2.jpg').exist?.should be_true
+      dist_path.join('img/three/three-3.jpg').exist?.should be_true
+    end
+
     after(:all) do
       FileUtils.rm_rf(dist_path)
     end

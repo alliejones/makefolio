@@ -29,6 +29,7 @@ module Makefolio
 
       generate_index
       generate_project_pages
+      generate_images
     end
 
     def create_image_metadata
@@ -66,6 +67,10 @@ module Makefolio
 
     def generate_project_page(project)
       save_html_file project.name, project.template, project.tpl_data, get_layout
+    end
+
+    def generate_images
+      @projects.each { |p| p.generate_images }
     end
 
     def save_html_file(filename, template, data, layout)
