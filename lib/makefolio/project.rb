@@ -53,12 +53,8 @@ module Makefolio
         image_fields = { 'filename' => nil, 'alt' => nil }
         image_filenames = read_image_filenames
 
-        image_data = []
-
-        image_filenames.each do |filename|
-          data = image_fields.clone
-          data['filename'] = filename
-          image_data << data
+        image_data = image_filenames.map do |filename|
+          data.merge('filename' => filename)
         end
 
         File.open(image_metadata_path, 'w') { |file| file.write image_data.to_yaml }
@@ -85,8 +81,7 @@ module Makefolio
     end
 
     def read_image_filenames
-      images = read_image_paths
-      images.map! do |image_path|
+      images = read_image_paths.map do |image_path|
         image_path.basename.to_s
       end
     end
