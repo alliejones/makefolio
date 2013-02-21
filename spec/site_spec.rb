@@ -35,7 +35,7 @@ describe Makefolio::Site do
 
     describe "the index file" do
       it "should exist" do
-        dist_path.join('index.html').exist?.should be_true
+        dist_path.join('index.html').should exist
       end
 
       it "should contain each project's info" do
@@ -54,9 +54,16 @@ describe Makefolio::Site do
     end
 
     it "should copy the images to their own folders in the dist directory" do
-      dist_path.join('img/one/one-1.jpg').exist?.should be_true
-      dist_path.join('img/two/two-2.jpg').exist?.should be_true
-      dist_path.join('img/three/three-3.jpg').exist?.should be_true
+      dist_path.join('img/one/one-1.jpg').should exist
+      dist_path.join('img/two/two-2.jpg').should exist
+      dist_path.join('img/three/three-3.jpg').should exist
+    end
+
+    it "should copy the resources folder to the dist directory" do
+      dist_path.join('css/style.css').should exist
+      dist_path.join('img/blank.gif').should exist
+      dist_path.join('js/script.js').should exist
+      dist_path.join('root_file.txt').should exist
     end
 
     after(:all) do

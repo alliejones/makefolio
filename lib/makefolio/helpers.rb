@@ -6,7 +6,7 @@ module Makefolio
     FRONT_MATTER_PATTERN = /[\n]*[-]{3}[\n]([\s\S]*)[\n]*[-]{3}[\n]/
 
     def self.parse_front_matter(content)
-      match = content.match(@@front_matter_pattern)
+      match = content.match(FRONT_MATTER_PATTERN)
 
       if match.nil?
         { }

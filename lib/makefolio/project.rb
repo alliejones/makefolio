@@ -50,11 +50,11 @@ module Makefolio
 
     def create_image_metadata
       unless image_metadata_path.exist?
-        image_fields = { 'filename' => nil, 'alt' => nil }
+        image_data = { 'filename' => nil, 'alt' => nil }
         image_filenames = read_image_filenames
 
         image_data = image_filenames.map do |filename|
-          data.merge('filename' => filename)
+          image_data.merge('filename' => filename)
         end
 
         File.open(image_metadata_path, 'w') { |file| file.write image_data.to_yaml }

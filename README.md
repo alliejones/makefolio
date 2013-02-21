@@ -46,7 +46,7 @@ Each project directory should contain a markdown file containing the project des
 
 The `title` property of a project is automatically set to its directory name, but this can be overridden by setting `title` in the front matter.
 
-### Images
+### Project Images
 Makefolio will not generate thumbnail images for you, but it will automatically associate thumbnails and large images if you follow its naming convention.
 
 To do this, add the suffix `-lg` to your image filename. For example, if you have an image file with the name `my-image.jpg`, the corresponding large image should be named `my-image-lg.jpg`.
@@ -56,6 +56,9 @@ To do this, add the suffix `-lg` to your image filename. For example, if you hav
 Running `makefolio init` will generate `images.yaml` metadata files for each of your projects. If the file already exists, makefolio will not overwrite it. (So if you add an additional image to your project you will have to add it to `images.yaml` yourself.)
 
 Whatever properties you set in this file will be available in your templates.
+
+### Other Site Resources
+Makefolio will copy the `_src/resources` directory and all of its contents, including subdirectories, to the `dist` directory unchanged. A file saved at `_src/resources/myfile.gif` will be copied to `dist/myfile.gif`.
 
 ### Templates
 Makefolio creates a very simple website structure: a site index containing a list of all of your projects, and an individual page for each project.

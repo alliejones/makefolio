@@ -8,6 +8,7 @@ module Makefolio
       @project_dir = 'projects'
       @template_dir = 'templates'
       @dist_dir = 'dist'
+      @resources_dir = 'resources'
 
       create_projects
     end
@@ -20,6 +21,10 @@ module Makefolio
       @path.join @template_dir
     end
 
+    def resources_path
+      @path.join @resources_dir
+    end
+
     def dist_path
       @path.parent.join @dist_dir
     end
@@ -30,6 +35,7 @@ module Makefolio
       generate_index
       generate_project_pages
       generate_images
+      generate_resource_directory
     end
 
     def initialize_projects
@@ -74,6 +80,10 @@ module Makefolio
 
     def generate_images
       @projects.each { |p| p.generate_images }
+    end
+
+    def generate_resource_directory
+      FileUtils::cp_r(resources_path.to_s + '/.', dist_path)
     end
 
     def save_html_file(filename, template, data, layout)
