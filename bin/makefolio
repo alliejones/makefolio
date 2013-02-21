@@ -7,6 +7,12 @@ cmd = ARGV.shift # get the subcommand
 
 src_path = Pathname.new(Dir.pwd).join '_src'
 
+help = %q{Usage: makefolio <commmand>
+Commands:
+  init  Create skeleton image metadata files for your projects
+        (will not overwrite exisiting images.yaml files)
+  gen   Generate your final html files and images in the ./dist directory}
+
 if src_path.exist?
 
   case cmd
@@ -17,7 +23,7 @@ if src_path.exist?
       Makefolio::Site.new(src_path.to_s).create_image_metadata
       puts 'Image metadata files created.'
     else
-      puts 'Some help will go here'
+      puts help
   end
 
 else
