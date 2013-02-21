@@ -9,8 +9,8 @@ src_path = Pathname.new(Dir.pwd).join '_src'
 
 help = %q{Usage: makefolio <commmand>
 Commands:
-  init  Create skeleton image metadata files for your projects
-        (will not overwrite exisiting images.yaml files)
+  init  Create skeleton image metadata and description files for your projects
+        (will not overwrite exisiting product descriptions and images.yaml files)
   gen   Generate your final html files and images in the ./dist directory}
 
 if src_path.exist?
@@ -20,8 +20,8 @@ if src_path.exist?
       Makefolio::Site.new(src_path.to_s).generate
       puts 'Site generated.'
     when 'init'
-      Makefolio::Site.new(src_path.to_s).create_image_metadata
-      puts 'Image metadata files created.'
+      Makefolio::Site.new(src_path.to_s).initalize_projects
+      puts 'Initial project files have been created.'
     else
       puts help
   end

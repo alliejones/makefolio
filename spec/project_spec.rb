@@ -71,29 +71,48 @@ describe Makefolio::Project do
     end
   end
 
-   describe "when creating image metadata files" do
-    it "should create an initial yaml file for each project without one" do
-      project2 = Makefolio::Project.new('two', site)
-      project2.create_image_metadata
+  describe "when creating project description files" do
+    let(:project_two) { Makefolio::Project.new('two', site) }
 
-      data = YAML.load(IO.read('./spec/_src/projects/two/images.yml'))
+    it "should create an initial description file for each project without one" do
+      project_two.create_description_file
+
+      data = Makefolio::Helpers.parse_front_matter(IO.read(project_two.description_path))
+      data['title'].should == 'two'
+    end
+
+    it "should not overwrite the description file if it already exists" do
+      project.create_description_file
+
+      data = Makefolio::Helpers.parse_front_matter(IO.read(project.description_path))
+      data['title'].should == 'Project One'
+    end
+
+    after(:all) do
+      FileUtils.rm(project_two.description_path) if project_two.description_path.exist?
+    end
+  end
+
+   describe "when creating image metadata a description files" do
+    let(:project_two) { Makefolio::Project.new('two', site) }
+    it "should create an images.yaml file for each project without one" do
+      project_two.create_image_metadata
+
+      data = YAML.load(IO.read project_two.image_metadata_path)
 
       # large versions of images (with -lg suffix) should be excluded
       data.should == [{"filename"=>"two-1.jpg", "alt"=>nil}, {"filename"=>"two-2.jpg", "alt"=>nil}, {"filename"=>"two-3.jpg", "alt"=>nil}]
     end
 
-    it "should not do anything if the file already exists" do
+    it "should not overwrite images.yaml if it already exists" do
       project.create_image_metadata
 
-      data = YAML.load(IO.read('./spec/_src/projects/one/images.yml'))
+      data = YAML.load(IO.read project.image_metadata_path)
       data[0]['alt'].should == 'Sleeping Abe'
     end
 
     after(:all) do
-      images_two = Pathname.new('./spec/_src/projects/two/images.yml')
-      if images_two.exist?
-        FileUtils.rm(images_two)
-      end
+      FileUtils.rm(project_two.image_metadata_path) if project_two.image_metadata_path.exist?
     end
   end
 

@@ -32,8 +32,11 @@ module Makefolio
       generate_images
     end
 
-    def create_image_metadata
-      @projects.each { |project| project.create_image_metadata }
+    def initialize_projects
+      @projects.each do |project|
+        project.create_image_metadata
+        project.create_description_file
+      end
     end
 
     private

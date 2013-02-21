@@ -1,5 +1,0 @@
-It was Passepartout himself, who had slipped upon the pyre in the midst of the smoke and, profiting by the still overhanging darkness, had delivered the young woman from death! It was Passepartout who, playing his part with a happy audacity, had passed through the crowd amid the general terror.
-
-A moment after all four of the party had disappeared in the woods, and the elephant was bearing them away at a rapid pace. But the cries and noise, and a ball which whizzed through Phileas Fogg's hat, apprised them that the trick had been discovered.
-
-The old rajah's body, indeed, now appeared upon the burning pyre; and the priests, recovered from their terror, perceived that an abduction had taken place. They hastened into the forest, followed by the soldiers, who fired a volley after the fugitives; but the latter rapidly increased the distance between them, and ere long found themselves beyond the reach of the bullets and arrows.

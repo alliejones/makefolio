@@ -7,7 +7,7 @@ module Makefolio
       @site = site
       @path = @site.project_path.join @name
 
-      read_content
+      read_description
       @images = read_image_metadata
       @template = read_template
     end
@@ -23,7 +23,7 @@ module Makefolio
       @front_matter
     end
 
-    def content_path
+    def description_path
       @path.join "#{@name}.md"
     end
 
@@ -35,16 +35,16 @@ module Makefolio
       @site.dist_path.join('img', @name)
     end
 
-    def read_content
-      if content_path.exist?
-        content = IO.read(content_path)
+    def read_description
+      if description_path.exist?
+        description = IO.read(description_path)
       else
-        content = ''
+        description = ''
       end
 
-      @front_matter = Helpers.parse_front_matter(content)
+      @front_matter = Helpers.parse_front_matter(description)
 
-      md_desc = Helpers.strip_front_matter(content)
+      md_desc = Helpers.strip_front_matter(description)
       @desc = RDiscount.new(md_desc).to_html
     end
 
@@ -62,6 +62,16 @@ module Makefolio
         end
 
         File.open(image_metadata_path, 'w') { |file| file.write image_data.to_yaml }
+      end
+    end
+
+    def create_description_file
+      unless description_path.exist?
+        front_matter_fields = { 'title' => @name }.to_yaml
+
+        File.open(description_path, 'w') do |file|
+          file.write "#{front_matter_fields}---\nA totally awesome project."
+        end
       end
     end
 
