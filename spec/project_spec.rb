@@ -50,7 +50,12 @@ describe Makefolio::Project do
     end
 
     it "should have an images property containing its associated images" do
-      project.images.should == [{"filename"=>"one-1.jpg", "alt"=>"Sleeping Abe", "path"=>"img/one/one-1.jpg", "filename_large"=>"one-1-lg.jpg", "path_large"=>"img/one/one-1-lg.jpg"}, {"filename"=>"one-2.jpg", "alt"=>"More sleeping Abe", "path"=>"img/one/one-2.jpg", "filename_large"=>"one-2-lg.jpg", "path_large"=>"img/one/one-2-lg.jpg"}]
+      project.images.should == [{"filename"=>"one-2.jpg", "alt"=>"More sleeping Abe", "sort"=>10}, {"filename"=>"one-1.jpg", "alt"=>"Sleeping Abe", "sort"=>20, "path"=>"img/one/one-1.jpg", "filename_large"=>"one-1-lg.jpg", "path_large"=>"img/one/one-1-lg.jpg"}]
+    end
+
+    it "should sort images if they have a sort order set" do
+      project.images[0]['filename'].should == 'one-2.jpg'
+      project.images[1]['filename'].should == 'one-1.jpg'
     end
 
     describe "with a missing content file" do
@@ -92,7 +97,7 @@ describe Makefolio::Project do
     end
   end
 
-   describe "when creating image metadata a description files" do
+   describe "when creating image metadata and description files" do
     let(:project_two) { Makefolio::Project.new('two', site) }
     it "should create an images.yaml file for each project without one" do
       project_two.create_image_metadata
@@ -100,7 +105,7 @@ describe Makefolio::Project do
       data = YAML.load(IO.read project_two.image_metadata_path)
 
       # large versions of images (with -lg suffix) should be excluded
-      data.should == [{"filename"=>"two-1.jpg", "alt"=>nil}, {"filename"=>"two-2.jpg", "alt"=>nil}, {"filename"=>"two-3.jpg", "alt"=>nil}]
+      data.should == [{"filename"=>"two-1.jpg", "alt"=>nil, "sort"=>nil}, {"filename"=>"two-2.jpg", "alt"=>nil, "sort"=>nil}, {"filename"=>"two-3.jpg", "alt"=>nil, "sort"=>nil}]
     end
 
     it "should not overwrite images.yaml if it already exists" do

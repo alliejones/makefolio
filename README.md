@@ -55,7 +55,7 @@ To do this, add the suffix `-lg` to your image filename. For example, if you hav
 
 Running `makefolio init` will generate `images.yaml` metadata files for each of your projects. If the file already exists, makefolio will not overwrite it. (So if you add an additional image to your project you will have to add it to `images.yaml` yourself.)
 
-Whatever properties you set in this file will be available in your templates.
+Whatever properties you set in this file will be available in your templates. The `sort` property can be set to specify a display order of images, in ascending order. (Images with no sort property will appear last.)
 
 ### Other Site Resources
 Makefolio will copy the `_src/resources` directory and all of its contents, including subdirectories, to the `dist` directory unchanged. A file saved at `_src/resources/myfile.gif` will be copied to `dist/myfile.gif`.

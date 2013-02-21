@@ -50,7 +50,7 @@ module Makefolio
 
     def create_image_metadata
       unless image_metadata_path.exist?
-        image_data = { 'filename' => nil, 'alt' => nil }
+        image_data = { 'filename' => nil, 'alt' => nil, 'sort' => nil }
         image_filenames = read_image_filenames
 
         image_data = image_filenames.map do |filename|
@@ -98,6 +98,12 @@ module Makefolio
 
           path_large = images_dist_path.join(filename_large).relative_path_from(@site.dist_path)
           image['path_large'] = path_large.to_s
+
+          images.sort! do |i1, i2|
+            i1_sort = i1['sort'].nil? ? Float::INFINITY : i1['sort'];
+            i2_sort = i2['sort'].nil? ? Float::INFINITY : i2['sort'];
+            i1_sort<=>i2_sort
+          end
         end
       else
         []

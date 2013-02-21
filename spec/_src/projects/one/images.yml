@@ -1,5 +1,7 @@
 ---
 - filename: one-1.jpg
   alt: Sleeping Abe
+  sort: 20
 - filename: one-2.jpg
   alt: More sleeping Abe
+  sort: 10
