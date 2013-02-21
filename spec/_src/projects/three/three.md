@@ -1,3 +1,6 @@
+---
+sort: 5
+---
 Test paragraph
 
 * A moment after all four

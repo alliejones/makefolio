@@ -23,6 +23,12 @@ describe Makefolio::Site do
       names = site.projects.collect { |p| p.name }
       names.should match_array([ 'one', 'two', 'three'])
     end
+
+    it "should sort projects if they have a sort order set" do
+      site.projects[0].name.should == 'three'
+      site.projects[1].name.should == 'one'
+      site.projects[2].name.should == 'two'
+    end
   end
 
   describe "when generating" do

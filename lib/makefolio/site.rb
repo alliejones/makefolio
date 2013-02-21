@@ -1,4 +1,5 @@
 module Makefolio
+
   class Site
     attr_accessor :path, :project_path, :template_path, :projects
 
@@ -62,6 +63,12 @@ module Makefolio
         project = Project.new(project_name, self)
 
         @projects << project
+      end
+
+      @projects.sort! do |p1, p2|
+        p1_sort = p1.front_matter['sort'].nil? ? Float::INFINITY : p1.front_matter['sort'];
+        p2_sort = p2.front_matter['sort'].nil? ? Float::INFINITY : p2.front_matter['sort'];
+        p1_sort<=>p2_sort
       end
     end
 

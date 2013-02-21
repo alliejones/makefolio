@@ -9,7 +9,7 @@ describe Makefolio::Project do
 
   describe "with front matter" do
     it "should have a front_matter property with a hash of the data" do
-      project.front_matter.should == { 'title' => 'Project One' }
+      project.front_matter.should == { 'title' => 'Project One', 'sort' => 10 }
     end
 
     it "should have a desc property with the contents of <name>.md converted to HTML" do
@@ -26,7 +26,7 @@ describe Makefolio::Project do
   end
 
   describe "without front matter" do
-    let(:project) { Makefolio::Project.new('three', site) }
+    let(:project) { Makefolio::Project.new('two', site) }
 
     it "should have a front_matter property set to an empty hash" do
       project.front_matter.should == {}
@@ -40,8 +40,7 @@ describe Makefolio::Project do
 
     it "should return description and default title in tpl_data" do
       project.tpl_data.keys.should include('title', 'desc')
-      project.tpl_data['title'].should == 'three'
-      project.tpl_data['desc'].should match(/^<p>Test paragraph/)
+      project.tpl_data['title'].should == 'two'
     end
   end
 

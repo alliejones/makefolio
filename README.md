@@ -44,7 +44,7 @@ Your project files should be organized like this (explanatory notes in italics):
 
 Each project directory should contain a markdown file containing the project description, using the same filename as the directory name (so the `project_one` directory should contain `project_one.md`). This markdown file can also contain YAML front matter. The front matter data will be added to the hash of project data available for use in the template files.
 
-The `title` property of a project is automatically set to its directory name, but this can be overridden by setting `title` in the front matter.
+The `title` property of a project is automatically set to its directory name, but this can be overridden by setting `title` in the front matter. The `sort` property can be set to specify a display order of projects, in ascending order. (Projects with no sort property will appear last.)
 
 ### Project Images
 Makefolio will not generate thumbnail images for you, but it will automatically associate thumbnails and large images if you follow its naming convention.
