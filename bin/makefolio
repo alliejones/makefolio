@@ -20,7 +20,7 @@ if src_path.exist?
       Makefolio::Site.new(src_path.to_s).generate
       puts 'Site generated.'
     when 'init'
-      Makefolio::Site.new(src_path.to_s).initalize_projects
+      Makefolio::Site.new(src_path.to_s).initialize_projects
       puts 'Initial project files have been created.'
     else
       puts help
