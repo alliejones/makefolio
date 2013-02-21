@@ -3,7 +3,7 @@ require 'yaml'
 module Makefolio
   class Helpers
     # selects the text between '---' lines
-    @@front_matter_pattern = /[\n]*[-]{3}[\n]([\s\S]*)[\n]*[-]{3}[\n]/
+    FRONT_MATTER_PATTERN = /[\n]*[-]{3}[\n]([\s\S]*)[\n]*[-]{3}[\n]/
 
     def self.parse_front_matter(content)
       match = content.match(@@front_matter_pattern)
@@ -16,7 +16,7 @@ module Makefolio
     end
 
     def self.strip_front_matter(content)
-      content.gsub(@@front_matter_pattern, '').strip
+      content.gsub(FRONT_MATTER_PATTERN, '').strip
     end
 
     def self.large_image_filename(filename)
