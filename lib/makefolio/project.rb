@@ -71,8 +71,7 @@ module Makefolio
     end
 
     def read_image_filenames
-      images = read_image_paths
-      images.map! do |image_path|
+      images = read_image_paths.map do |image_path|
         image_path.basename.to_s
       end
     end
