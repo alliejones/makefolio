@@ -3,7 +3,7 @@ require 'yaml'
 module Makefolio
   class Helpers
     # selects the text between '---' lines
-    FRONT_MATTER_PATTERN = /[\n]*[-]{3}[\n]([\s\S]*)[\n]*[-]{3}[\n]/
+    FRONT_MATTER_PATTERN = /\n*---\n([\s\S]*)\n*---\n/
 
     def self.parse_front_matter(content)
       match = content.match(FRONT_MATTER_PATTERN)
