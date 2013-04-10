@@ -58,6 +58,10 @@ describe Makefolio::Project do
       project.images[1]['filename'].should == 'one-1.jpg'
     end
 
+    it "should have a url property" do
+      project.url.should == 'one.html'
+    end
+
     describe "with a missing content file" do
       before do
         Pathname.new('./spec/_src/projects/one/one.md').rename('./spec/_src/projects/one/wrong.md')

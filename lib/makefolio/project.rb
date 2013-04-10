@@ -23,6 +23,10 @@ module Makefolio
       @front_matter
     end
 
+    def url
+      "#{@name}.html"
+    end
+
     def description_path
       @path.join "#{@name}.md"
     end
