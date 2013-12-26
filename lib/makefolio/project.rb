@@ -104,8 +104,8 @@ module Makefolio
           image['path_large'] = path_large.to_s
 
           images.sort! do |i1, i2|
-            i1_sort = i1['sort'].nil? ? Float::INFINITY : i1['sort'];
-            i2_sort = i2['sort'].nil? ? Float::INFINITY : i2['sort'];
+            i1_sort = i1['sort'] || Float::INFINITY
+            i2_sort = i1['sort'] || Float::INFINITY
             i1_sort<=>i2_sort
           end
         end
